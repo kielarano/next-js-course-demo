@@ -1,6 +1,6 @@
+import { MongoClient, ObjectId } from "mongodb";
 import { Fragment } from "react";
 import Head from "next/head";
-import { MongoClient, ObjectId } from "mongodb";
 
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
@@ -23,7 +23,7 @@ function MeetupDetails(props) {
 
 export async function getStaticPaths() {
   const client = await MongoClient.connect(
-    "mongodb+srv://kielarano:oyowprj6knmz8gQN@cluster0.08qn7.mongodb.net/meetupsDB?retryWrites=true&w=majority"
+    "mongodb+srv://kielarano:eUbhmbO5M02adDni@cluster0.08qn7.mongodb.net/meetupsDB?retryWrites=true&w=majority"
   );
   const db = client.db();
 
@@ -34,7 +34,7 @@ export async function getStaticPaths() {
   client.close();
 
   return {
-    fallback: false,
+    fallback: "blocking",
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
     })),
@@ -42,10 +42,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
+  // fetch data for a single meetup
+
   const meetupId = context.params.meetupId;
 
   const client = await MongoClient.connect(
-    "mongodb+srv://kielarano:oyowprj6knmz8gQN@cluster0.08qn7.mongodb.net/meetupsDB?retryWrites=true&w=majority"
+    "mongodb+srv://kielarano:eUbhmbO5M02adDni@cluster0.08qn7.mongodb.net/meetupsDB?retryWrites=true&w=majority"
   );
   const db = client.db();
 
